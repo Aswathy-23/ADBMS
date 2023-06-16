@@ -1,0 +1,43 @@
+DECLARE
+st number(2);
+ed number(2);
+n number (2);
+m number (2);
+c number(20);
+BEGIN
+st:=&st;
+ed:=&ed;
+for n in st..ed
+LOOP
+c:=0;
+for m in 1..n
+LOOP
+if mod(n,m)=0 then
+c:=c+1;
+ END IF;
+ END LOOP;
+ if c<=2 then
+ DBMS_OUTPUT.PUT_LINE(n);
+ END IF;
+ END LOOP;
+ END;
+/
+
+
+
+
+Enter value for st: 1
+old   8: st:=&st;
+new   8: st:=1;
+Enter value for ed: 20
+old   9: ed:=&ed;
+new   9: ed:=20;
+1
+2
+3
+5
+7
+11
+13
+17
+19
