@@ -1,0 +1,82 @@
+create table hote(hotelid int,name varchar(20),no_of_days int,rate int,constraint oo primary key 
+
+(hotelid));
+
+
+create table guest999(gid int,gname varchar(20),no_of_days int,hid int,constraint jiljiljooo primary 
+
+key (gid),constraint jiljil foreign key(hid)references hote(hotelid));
+
+Insert into hote values(1,'A',4,500);
+Insert into hote values(2,'B',3,1500);
+Insert into hote values(3,'C',2,1000);
+Insert into hote values(4,'D',1,400);
+
+
+Insert into guest999 values(100,'Aswathy',1,1);
+Insert into guest999 values(101,'Anu',1,3);
+Insert into guest999 values(102,'kurip',1,4);
+Insert into guest999 values(103,'Neetz',1,2);
+
+
+DECLARE
+  r NUMBER(10);
+  CURSOR c IS
+    SELECT guest999.*, hote.rate
+    FROM guest999, hote
+    WHERE guest999.hid = hote.hotelid;
+
+  id guest999.gid%TYPE;
+  name guest999.gname%TYPE;
+  days guest999.no_of_days%TYPE;
+  hid guest999.hid%TYPE;
+  rate hote.rate%TYPE;
+
+BEGIN
+  OPEN c;
+  DBMS_OUTPUT.PUT_LINE('id ' || 'name ' || 'hid ' || 'rate');
+  LOOP
+    FETCH c INTO id, name, days, hid, rate;
+    EXIT WHEN c%NOTFOUND;
+    r := 0;
+    r := rate * days;
+    DBMS_OUTPUT.PUT_LINE(id || ' ' || name || ' ' || hid || ' ' || r);
+  END LOOP;
+  CLOSE c;
+END;
+/
+
+
+id name hid rate
+100 Aswathy 1 500
+103 Neetz 2 1500
+101 Anu 3 1000
+102 kurip 4 400
+
+
+
+
+DECLARE 
+CURSOR c IS
+SELECT * FROM hote where rate>500;
+hid hote.hotelid%type;
+name hote.name%type;
+tr hote.no_of_days%type;
+rate hote.rate%type;
+BEGIN
+OPEN c;
+ DBMS_OUTPUT.PUT_LINE('hid ' || 'name ' || 'rooms ' || ' rate');
+LOOP
+ FETCH c INTO hid,name,tr,rate;
+ EXIT WHEN c%NOTFOUND;
+ DBMS_OUTPUT.PUT_LINE(hid ||' ' || name ||' ' || tr ||' ' ||rate);
+ END LOOP;
+  CLOSE c;
+END;
+/
+
+hid name rooms  rate
+2 B 3 1500
+3 C 2 1000
+
+PL/SQL procedure successfully completed.
